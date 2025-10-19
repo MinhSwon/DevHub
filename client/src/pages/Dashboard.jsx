@@ -25,10 +25,10 @@ const Dashboard = () => {
   ];
 
   const sportData = [
-    { label: 'Bóng đá', value: 45, color: '#3b82f6' },
-    { label: 'Tennis', value: 25, color: '#10b981' },
-    { label: 'Bóng rổ', value: 20, color: '#f59e0b' },
-    { label: 'Bơi lội', value: 10, color: '#ef4444' }
+    { label: 'Bóng đá', value: 45, color: '#0057B7' },
+    { label: 'Tennis', value: 25, color: '#DA291C' },
+    { label: 'Bóng rổ', value: 20, color: '#FF6B35' },
+    { label: 'Bơi lội', value: 10, color: '#28A745' }
   ];
 
   const statsData = [
@@ -38,7 +38,7 @@ const Dashboard = () => {
       change: 12.5,
       changeType: 'positive',
       icon: (
-        <svg className="w-5 h-5 text-umt-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 text-umt-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21l3-3m0 0l3 3m-3-3v-3"/>
         </svg>
       ),
@@ -50,7 +50,7 @@ const Dashboard = () => {
       change: -5.2,
       changeType: 'negative',
       icon: (
-        <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
       ),
@@ -62,7 +62,7 @@ const Dashboard = () => {
       change: 8.1,
       changeType: 'positive',
       icon: (
-        <svg className="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
         </svg>
       ),
@@ -72,7 +72,7 @@ const Dashboard = () => {
       title: 'Môn yêu thích',
       value: userStats.favoriteSport,
       icon: (
-        <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 text-umt-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
         </svg>
       )
@@ -195,29 +195,47 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-bg-primary to-ocean-pale">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-display-lg text-gray-900 mb-2 animate-fade-in">
-            Dashboard
-          </h1>
-          <p className="text-lg text-gray-600 animate-fade-in-delay-200">
-            Quản lý đặt sân và theo dõi hoạt động thể thao của bạn
-          </p>
+             <div className="bg-gradient-to-r from-ocean-deep via-ocean-dark to-ocean-primary text-white py-16 relative overflow-hidden">
+               {/* Grid Pattern Background */}
+               <div className="absolute inset-0 opacity-20">
+                 <div className="absolute inset-0" style={{
+                   backgroundImage: `
+                     linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                     linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+                   `,
+                   backgroundSize: '30px 30px'
+                 }}></div>
+               </div>
+               
+               <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                 <div className="text-center">
+                   <h1 className="text-4xl md:text-5xl font-bold mb-4">👤 Tài Khoản Cá Nhân</h1>
+                   <p className="text-xl opacity-90 max-w-3xl mx-auto">
+                     Quản lý đặt sân, theo dõi hoạt động thể thao và cập nhật thông tin cá nhân
+                   </p>
+                 </div>
+               </div>
         </div>
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-lg p-6 sticky top-8 animate-slide-in-left">
+            <div className="bg-white rounded-xl shadow-lg p-6 sticky top-8">
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-umt-red rounded-full flex items-center justify-center mr-4">
-                  <span className="text-white font-bold text-lg">JD</span>
+                <div className="w-16 h-16 bg-gradient-to-br from-umt-blue to-blue-600 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-white font-bold text-xl">JD</span>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">John Doe</h3>
-                  <p className="text-sm text-gray-500">Thành viên VIP</p>
+                  <p className="text-sm text-gray-500">🎓 Thành viên UMT</p>
+                  <div className="flex items-center mt-1">
+                    <span className="text-xs bg-umt-red text-white px-2 py-1 rounded-full">
+                      Giảm giá 20%
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -228,8 +246,8 @@ const Dashboard = () => {
                     onClick={() => setActiveTab(tab.id)}
                     className={`w-full flex items-center px-4 py-3 rounded-lg text-left transition-all duration-300 ${
                       activeTab === tab.id
-                        ? 'bg-umt-red text-white shadow-lg'
-                        : 'text-gray-600 hover:bg-gray-100'
+                        ? 'bg-gradient-to-r from-umt-blue to-blue-600 text-white shadow-lg'
+                        : 'text-gray-600 hover:bg-umt-light-blue hover:text-umt-blue'
                     }`}
                   >
                     <span className="text-xl mr-3">{tab.icon}</span>
@@ -237,6 +255,34 @@ const Dashboard = () => {
                   </button>
                 ))}
               </nav>
+
+              {/* Quick Actions */}
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <h4 className="text-sm font-semibold text-gray-700 mb-3">Thao tác nhanh</h4>
+                <div className="space-y-2">
+                  <Link
+                    to="/booking"
+                    className="w-full flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-umt-light-blue hover:text-umt-blue rounded-lg transition-colors duration-200"
+                  >
+                    <span className="mr-2">⚽</span>
+                    Đặt sân mới
+                  </Link>
+                  <Link
+                    to="/shop"
+                    className="w-full flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-umt-light-blue hover:text-umt-blue rounded-lg transition-colors duration-200"
+                  >
+                    <span className="mr-2">🛒</span>
+                    Mua sắm
+                  </Link>
+                  <Link
+                    to="/events"
+                    className="w-full flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-umt-light-blue hover:text-umt-blue rounded-lg transition-colors duration-200"
+                  >
+                    <span className="mr-2">🎉</span>
+                    Sự kiện
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -244,50 +290,91 @@ const Dashboard = () => {
           <div className="lg:col-span-3">
             {/* Overview Tab */}
             {activeTab === 'overview' && (
-              <div className="space-y-8 animate-fade-in">
+              <div className="space-y-8">
                 {/* Stats Cards */}
-                <StatsGrid data={statsData} columns={4} />
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                  {statsData.map((stat, index) => (
+                    <div key={index} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-gray-600">{stat.title}</p>
+                          <p className="text-2xl font-bold text-gray-900 mt-1">
+                            {stat.format === 'currency' 
+                              ? `${stat.value.toLocaleString('vi-VN')}₫`
+                              : stat.format === 'number'
+                              ? stat.value
+                              : stat.value
+                            }
+                          </p>
+                          {stat.change && (
+                            <p className={`text-sm mt-1 ${
+                              stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
+                            }`}>
+                              {stat.changeType === 'positive' ? '↗' : '↘'} {Math.abs(stat.change)}%
+                            </p>
+                          )}
+                        </div>
+                        <div className="w-12 h-12 bg-gradient-to-br from-umt-blue to-blue-600 rounded-xl flex items-center justify-center">
+                          {stat.icon}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
                 {/* Charts Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <div className="card-elevated">
-                    <div className="p-6 border-b border-gray-200">
-                      <h3 className="text-lg font-semibold text-gray-900">Đặt sân theo tuần</h3>
+                  <div className="bg-white rounded-xl shadow-lg p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">📈 Đặt sân theo tuần</h3>
+                    <div className="h-64 flex items-end justify-between space-x-2">
+                      {bookingData.map((item, index) => (
+                        <div key={index} className="flex flex-col items-center flex-1">
+                          <div 
+                            className="bg-gradient-to-t from-umt-blue to-blue-600 rounded-t-lg w-full transition-all duration-500 hover:from-blue-600 hover:to-blue-700"
+                            style={{ height: `${(item.value / 12) * 200}px` }}
+                          ></div>
+                          <span className="text-xs text-gray-600 mt-2">{item.label}</span>
+                          <span className="text-xs font-semibold text-umt-blue">{item.value}</span>
                     </div>
-                    <div className="p-6">
-                      <SimpleChart 
-                        data={bookingData} 
-                        type="bar" 
-                        color="#3b82f6"
-                        height={200}
-                      />
+                      ))}
                     </div>
                   </div>
 
-                  <div className="card-elevated">
-                    <div className="p-6 border-b border-gray-200">
-                      <h3 className="text-lg font-semibold text-gray-900">Phân bố môn thể thao</h3>
+                  <div className="bg-white rounded-xl shadow-lg p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">🎯 Phân bố môn thể thao</h3>
+                    <div className="space-y-4">
+                      {sportData.map((sport, index) => (
+                        <div key={index} className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <div 
+                              className="w-4 h-4 rounded-full"
+                              style={{ backgroundColor: sport.color }}
+                            ></div>
+                            <span className="text-sm font-medium text-gray-700">{sport.label}</span>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <div className="w-24 bg-gray-200 rounded-full h-2">
+                              <div 
+                                className="h-2 rounded-full"
+                                style={{ 
+                                  width: `${sport.value}%`,
+                                  backgroundColor: sport.color 
+                                }}
+                              ></div>
+                            </div>
+                            <span className="text-sm font-semibold text-gray-900 w-8">{sport.value}%</span>
+                          </div>
                     </div>
-                    <div className="p-6 flex items-center justify-center">
-                      <ProgressRing 
-                        value={75} 
-                        max={100} 
-                        size={160}
-                        color="#10b981"
-                        showPercentage={true}
-                      />
+                      ))}
                     </div>
                   </div>
                 </div>
 
-                {/* Activity Feed */}
-                <ActivityFeed activities={activities} maxItems={5} />
-
                 {/* Recent Bookings */}
                 <div className="bg-white rounded-xl shadow-lg p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-semibold text-gray-900">Đặt sân gần đây</h2>
-                    <Link to="/booking" className="text-umt-red hover:text-red-700 font-medium">
+                    <h2 className="text-xl font-semibold text-gray-900">🏟️ Đặt sân gần đây</h2>
+                    <Link to="/booking" className="bg-gradient-to-r from-umt-red to-red-600 text-white px-4 py-2 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium">
                       Đặt sân mới
                     </Link>
                   </div>
@@ -295,8 +382,8 @@ const Dashboard = () => {
                     {recentBookings.slice(0, 3).map((booking) => (
                       <div key={booking.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
                         <div className="flex items-center space-x-4">
-                          <div className="w-12 h-12 bg-umt-blue rounded-lg flex items-center justify-center">
-                            <span className="text-white font-bold">
+                          <div className="w-12 h-12 bg-gradient-to-br from-umt-blue to-blue-600 rounded-lg flex items-center justify-center">
+                            <span className="text-white text-lg">
                               {booking.sport === 'Bóng đá' ? '⚽' : booking.sport === 'Tennis' ? '🎾' : '🏀'}
                             </span>
                           </div>
@@ -309,7 +396,7 @@ const Dashboard = () => {
                           <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(booking.status)}`}>
                             {getStatusText(booking.status)}
                           </span>
-                          <p className="text-sm text-gray-600 mt-1">{booking.price.toLocaleString('vi-VN')} VNĐ</p>
+                          <p className="text-sm text-gray-600 mt-1">{booking.price.toLocaleString('vi-VN')}₫</p>
                         </div>
                       </div>
                     ))}
@@ -319,8 +406,8 @@ const Dashboard = () => {
                 {/* Upcoming Events */}
                 <div className="bg-white rounded-xl shadow-lg p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-semibold text-gray-900">Sự kiện sắp tới</h2>
-                    <Link to="/events" className="text-umt-red hover:text-red-700 font-medium">
+                    <h2 className="text-xl font-semibold text-gray-900">🎉 Sự kiện sắp tới</h2>
+                    <Link to="/events" className="text-umt-blue hover:text-blue-700 font-medium">
                       Xem tất cả
                     </Link>
                   </div>
@@ -353,12 +440,12 @@ const Dashboard = () => {
 
             {/* Bookings Tab */}
             {activeTab === 'bookings' && (
-              <div className="space-y-6 animate-fade-in">
+              <div className="space-y-6">
                 <div className="bg-white rounded-xl shadow-lg p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-semibold text-gray-900">Lịch sử đặt sân</h2>
+                    <h2 className="text-xl font-semibold text-gray-900">📅 Lịch sử đặt sân</h2>
                     <div className="flex space-x-2">
-                      <button className="px-4 py-2 bg-umt-red text-white rounded-lg hover:bg-red-700 transition-colors duration-300">
+                      <button className="px-4 py-2 bg-gradient-to-r from-umt-red to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200">
                         Tất cả
                       </button>
                       <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-300">
@@ -374,7 +461,7 @@ const Dashboard = () => {
                       <div key={booking.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow duration-300">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
-                            <div className="w-16 h-16 bg-umt-blue rounded-lg flex items-center justify-center">
+                            <div className="w-16 h-16 bg-gradient-to-br from-umt-blue to-blue-600 rounded-lg flex items-center justify-center">
                               <span className="text-2xl text-white">
                                 {booking.sport === 'Bóng đá' ? '⚽' : booking.sport === 'Tennis' ? '🎾' : '🏀'}
                               </span>
@@ -390,7 +477,7 @@ const Dashboard = () => {
                               {getStatusText(booking.status)}
                             </span>
                             <p className="text-lg font-semibold text-gray-900 mt-2">
-                              {booking.price.toLocaleString('vi-VN')} VNĐ
+                              {booking.price.toLocaleString('vi-VN')}₫
                             </p>
                             <div className="flex space-x-2 mt-3">
                               <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-300">
@@ -413,9 +500,9 @@ const Dashboard = () => {
 
             {/* Events Tab */}
             {activeTab === 'events' && (
-              <div className="space-y-6 animate-fade-in">
+              <div className="space-y-6">
                 <div className="bg-white rounded-xl shadow-lg p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Sự kiện đã tham gia</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 mb-6">🎉 Sự kiện đã tham gia</h2>
                   <div className="space-y-4">
                     {upcomingEvents.map((event) => (
                       <div key={event.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow duration-300">
@@ -437,7 +524,7 @@ const Dashboard = () => {
                             <p className="text-sm text-gray-600">
                               {event.participants}/{event.maxParticipants} người tham gia
                             </p>
-                            <button className="mt-3 px-4 py-2 bg-umt-blue text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                            <button className="mt-3 px-4 py-2 bg-gradient-to-r from-umt-blue to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200">
                               Xem chi tiết
                             </button>
                           </div>
@@ -451,9 +538,9 @@ const Dashboard = () => {
 
             {/* Profile Tab */}
             {activeTab === 'profile' && (
-              <div className="space-y-6 animate-fade-in">
+              <div className="space-y-6">
                 <div className="bg-white rounded-xl shadow-lg p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Thông tin cá nhân</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 mb-6">👤 Thông tin cá nhân</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
@@ -467,7 +554,7 @@ const Dashboard = () => {
                       <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                       <input
                         type="email"
-                        defaultValue="john.doe@example.com"
+                        defaultValue="john.doe@umt.edu.vn"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-umt-blue focus:border-transparent transition-all duration-300"
                       />
                     </div>
@@ -489,14 +576,14 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <div className="mt-6">
-                    <button className="bg-umt-red text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors duration-300 font-medium">
+                    <button className="bg-gradient-to-r from-umt-red to-red-600 text-white px-6 py-3 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium">
                       Cập nhật thông tin
                     </button>
                   </div>
                 </div>
 
                 <div className="bg-white rounded-xl shadow-lg p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Đổi mật khẩu</h2>
+                  <h2 className="text-xl font-semibold text-gray-900 mb-6">🔒 Đổi mật khẩu</h2>
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Mật khẩu hiện tại</label>
@@ -519,7 +606,7 @@ const Dashboard = () => {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-umt-blue focus:border-transparent transition-all duration-300"
                       />
                     </div>
-                    <button className="bg-umt-blue text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium">
+                    <button className="bg-gradient-to-r from-umt-blue to-blue-600 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-medium">
                       Đổi mật khẩu
                     </button>
                   </div>

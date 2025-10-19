@@ -8,12 +8,19 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Booking from './pages/Booking';
+import Shop from './pages/Shop';
 import News from './pages/News';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
 import Events from './pages/Events';
 import Facilities from './pages/Facilities';
+import LogoDemo from './pages/LogoDemo';
+import HeaderDemo from './pages/HeaderDemo';
+import BannerDemo from './pages/BannerDemo';
+import TestPage from './pages/TestPage';
+import OceanThemeDemo from './pages/OceanThemeDemo';
+import UMTShowcase from './pages/UMTShowcase';
 
 function App() {
   return (
@@ -23,18 +30,25 @@ function App() {
           <TopHeader />
           <Navbar />
           <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/booking" element={<Booking />} />
-              <Route path="/news" element={<News />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/events" element={<Events />} />
-              <Route path="/facilities" element={<Facilities />} />
-            </Routes>
+                   <Routes>
+                     <Route path="/" element={<Home />} />
+                     <Route path="/login" element={<Login />} />
+                     <Route path="/register" element={<Register />} />
+                     <Route path="/booking" element={<Booking />} />
+                     <Route path="/shop" element={<Shop />} />
+                     <Route path="/news" element={<News />} />
+                     <Route path="/contact" element={<Contact />} />
+                     <Route path="/dashboard" element={<Dashboard />} />
+                     <Route path="/about" element={<About />} />
+                     <Route path="/events" element={<Events />} />
+                     <Route path="/facilities" element={<Facilities />} />
+                     <Route path="/logo-demo" element={<LogoDemo />} />
+                     <Route path="/header-demo" element={<HeaderDemo />} />
+                     <Route path="/banner-demo" element={<BannerDemo />} />
+                     <Route path="/test" element={<TestPage />} />
+                     <Route path="/ocean-theme" element={<OceanThemeDemo />} />
+                     <Route path="/umt-showcase" element={<UMTShowcase />} />
+                   </Routes>
           </main>
           <Footer />
         </div>
