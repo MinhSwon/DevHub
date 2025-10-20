@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="60" viewBox="0 0 200 60" role="img" aria-label="UMT Sport Hub">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#0057B7"/>
+      <stop offset="100%" stop-color="#103A80"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="200" height="60" fill="url(#bg)" rx="8"/>
+  
+  <!-- UMT Text -->
+  <text x="20" y="38" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="24" font-weight="900" fill="#FFFFFF" letter-spacing="2">UMT</text>
+
+  <!-- LL Symbol -->
+  <g transform="translate(80, 20)">
+    <rect x="0" y="12" width="12" height="4" rx="2" fill="#DA291C"/>
+    <rect x="16" y="0" width="4" height="20" rx="2" fill="#22D3EE"/>
+  </g>
+
+  <!-- SPORT HUB Text -->
+  <text x="110" y="25" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="14" font-weight="800" fill="#22D3EE" letter-spacing="1">SPORT</text>
+  <text x="110" y="42" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="14" font-weight="800" fill="#FFFFFF" letter-spacing="1">HUB</text>
+</svg>

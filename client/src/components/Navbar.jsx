@@ -9,49 +9,49 @@ const Navbar = () => {
   const { isAuthenticated, user, logout } = useContext(AuthContext);
 
   return (
-           <nav className="bg-white shadow-lg sticky top-0 z-40 border-b-2 border-ocean-primary">
+    <nav className="bg-white shadow-lg sticky top-0 z-40 border-b-2 border-ocean-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-3">
-              <Logo className="w-20 h-12" size="default" />
-              <div className="hidden lg:block">
-                       <h1 className="text-lg font-bold text-ocean-primary">UMT SPORT HUB</h1>
-                <p className="text-xs text-gray-500">Trải nghiệm thể thao thông minh</p>
-              </div>
+              <Logo className="w-32 h-10" size="default" />
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:block">
-            <div className="ml-8 flex items-center space-x-2">
+            <div className="ml-8 flex items-center space-x-1">
               <Link to="/" className="nav-link flex flex-col items-center p-3 rounded-xl hover:bg-ocean-pale transition-all duration-300 group">
-                <span className="text-2xl mb-1 group-hover:scale-110 transition-transform duration-300">🏠</span>
+                <span className="text-xl mb-1 group-hover:scale-110 transition-transform duration-300">🏠</span>
                 <span className="text-xs font-medium">Trang chủ</span>
               </Link>
               <Link to="/booking" className="nav-link flex flex-col items-center p-3 rounded-xl hover:bg-ocean-pale transition-all duration-300 group">
-                <span className="text-2xl mb-1 group-hover:scale-110 transition-transform duration-300">⚽</span>
+                <span className="text-xl mb-1 group-hover:scale-110 transition-transform duration-300">⚽</span>
                 <span className="text-xs font-medium">Đặt sân</span>
               </Link>
               <Link to="/shop" className="nav-link flex flex-col items-center p-3 rounded-xl hover:bg-ocean-pale transition-all duration-300 group">
-                <span className="text-2xl mb-1 group-hover:scale-110 transition-transform duration-300">🛒</span>
+                <span className="text-xl mb-1 group-hover:scale-110 transition-transform duration-300">🛒</span>
                 <span className="text-xs font-medium">Cửa hàng</span>
               </Link>
               <Link to="/facilities" className="nav-link flex flex-col items-center p-3 rounded-xl hover:bg-ocean-pale transition-all duration-300 group">
-                <span className="text-2xl mb-1 group-hover:scale-110 transition-transform duration-300">🏟️</span>
+                <span className="text-xl mb-1 group-hover:scale-110 transition-transform duration-300">🏟️</span>
                 <span className="text-xs font-medium">Cơ sở</span>
               </Link>
               <Link to="/events" className="nav-link flex flex-col items-center p-3 rounded-xl hover:bg-ocean-pale transition-all duration-300 group">
-                <span className="text-2xl mb-1 group-hover:scale-110 transition-transform duration-300">🎉</span>
+                <span className="text-xl mb-1 group-hover:scale-110 transition-transform duration-300">🎉</span>
                 <span className="text-xs font-medium">Sự kiện</span>
               </Link>
               <Link to="/news" className="nav-link flex flex-col items-center p-3 rounded-xl hover:bg-ocean-pale transition-all duration-300 group">
-                <span className="text-2xl mb-1 group-hover:scale-110 transition-transform duration-300">📰</span>
+                <span className="text-xl mb-1 group-hover:scale-110 transition-transform duration-300">📰</span>
                 <span className="text-xs font-medium">Tin tức</span>
               </Link>
+              <Link to="/community" className="nav-link flex flex-col items-center p-3 rounded-xl hover:bg-ocean-pale transition-all duration-300 group">
+                <span className="text-xl mb-1 group-hover:scale-110 transition-transform duration-300">👥</span>
+                <span className="text-xs font-medium">Cộng đồng</span>
+              </Link>
               <Link to="/contact" className="nav-link flex flex-col items-center p-3 rounded-xl hover:bg-ocean-pale transition-all duration-300 group">
-                <span className="text-2xl mb-1 group-hover:scale-110 transition-transform duration-300">📞</span>
+                <span className="text-xl mb-1 group-hover:scale-110 transition-transform duration-300">📞</span>
                 <span className="text-xs font-medium">Liên hệ</span>
               </Link>
             </div>
@@ -86,7 +86,7 @@ const Navbar = () => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               type="button"
-                     className="bg-ocean-primary inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-ocean-medium focus:outline-none focus:ring-2 focus:ring-ocean-primary focus:ring-offset-2"
+              className="bg-ocean-primary inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-ocean-medium focus:outline-none focus:ring-2 focus:ring-ocean-primary focus:ring-offset-2"
               aria-controls="mobile-menu"
               aria-expanded="false"
             >
@@ -126,6 +126,9 @@ const Navbar = () => {
             </Link>
             <Link to="/news" className="text-gray-700 hover:bg-umt-light-blue hover:text-umt-blue block px-3 py-2 rounded-md text-base font-medium">
               📰 Tin tức
+            </Link>
+            <Link to="/community" className="text-gray-700 hover:bg-umt-light-blue hover:text-umt-blue block px-3 py-2 rounded-md text-base font-medium">
+              👥 Cộng đồng
             </Link>
             <Link to="/contact" className="text-gray-700 hover:bg-umt-light-blue hover:text-umt-blue block px-3 py-2 rounded-md text-base font-medium">
               📞 Liên hệ

@@ -10,7 +10,8 @@ const Facilities = () => {
     { id: 'tennis', name: 'Tennis', icon: '🎾' },
     { id: 'basketball', name: 'Bóng rổ', icon: '🏀' },
     { id: 'swimming', name: 'Bơi lội', icon: '🏊' },
-    { id: 'gym', name: 'Gym', icon: '💪' }
+    { id: 'gym', name: 'Gym', icon: '💪' },
+    { id: 'pickleball', name: 'Pickleball', icon: '🥒' }
   ];
 
   const facilities = [
@@ -206,6 +207,99 @@ const Facilities = () => {
       availability: 'Có sẵn',
       rating: 4.8,
       reviews: 67
+    },
+    // Pickleball Courts
+    {
+      id: 7,
+      name: 'Sân Pickleball P1',
+      category: 'pickleball',
+      type: 'Ngoài trời',
+      size: 'Đơn/Đôi (13.41m x 6.10m)',
+      surface: 'Sân cứng acrylic',
+      capacity: 4,
+      price: 180000,
+      image: 'https://images.unsplash.com/photo-1601582585014-1e8b430fd5b2?w=800&h=600&fit=crop',
+      images: [
+        'https://images.unsplash.com/photo-1601582585014-1e8b430fd5b2?w=800&h=600&fit=crop',
+        'https://images.unsplash.com/photo-1601582585483-2f8a6e2c6b33?w=800&h=600&fit=crop'
+      ],
+      features: [
+        'Kẻ vạch tiêu chuẩn USA Pickleball',
+        'Lưới pickleball chuyên dụng',
+        'Đèn LED ban đêm',
+        'Khu vực khởi động',
+        'Hệ thống thoát nước tốt'
+      ],
+      amenities: [
+        'Ghế chờ',
+        'Nhà vệ sinh',
+        'Quầy nước',
+        'Bãi đậu xe'
+      ],
+      availability: 'Có sẵn',
+      rating: 4.9,
+      reviews: 54
+    },
+    {
+      id: 8,
+      name: 'Sân Pickleball P2',
+      category: 'pickleball',
+      type: 'Trong nhà',
+      size: 'Đơn/Đôi (13.41m x 6.10m)',
+      surface: 'PVC chống trượt',
+      capacity: 4,
+      price: 220000,
+      image: 'https://images.unsplash.com/photo-1601582585407-6e2d7c4d0c9b?w=800&h=600&fit=crop',
+      images: [
+        'https://images.unsplash.com/photo-1601582585407-6e2d7c4d0c9b?w=800&h=600&fit=crop',
+        'https://images.unsplash.com/photo-1601582585483-2f8a6e2c6b33?w=800&h=600&fit=crop'
+      ],
+      features: [
+        'Điều hòa ổn định',
+        'Âm thanh nhẹ',
+        'Lưới tiêu chuẩn',
+        'Ánh sáng chống chói',
+        'Khu vực nghỉ ngơi'
+      ],
+      amenities: [
+        'Tủ locker',
+        'Khu thay đồ',
+        'Nhà vệ sinh',
+        'Bãi đậu xe'
+      ],
+      availability: 'Có sẵn',
+      rating: 4.7,
+      reviews: 31
+    },
+    {
+      id: 9,
+      name: 'Cụm Pickleball P3-P4',
+      category: 'pickleball',
+      type: 'Ngoài trời',
+      size: '02 sân liền kề',
+      surface: 'Sân cứng acrylic',
+      capacity: 8,
+      price: 320000,
+      image: 'https://images.unsplash.com/photo-1601582584985-0f2d2e1d6b3e?w=800&h=600&fit=crop',
+      images: [
+        'https://images.unsplash.com/photo-1601582584985-0f2d2e1d6b3e?w=800&h=600&fit=crop'
+      ],
+      features: [
+        'Cụm 2 sân thi đấu',
+        'Vạch sân chuẩn',
+        'Đèn LED ban đêm',
+        'Khu vực khởi động',
+        'Rào chắn an toàn'
+      ],
+      amenities: [
+        'Ghế chờ',
+        'Nhà vệ sinh',
+        'Quầy nước',
+        'Bãi đậu xe'
+      ],
+      availability: 'Có sẵn',
+      rating: 4.8,
+      reviews: 22
     }
   ];
 

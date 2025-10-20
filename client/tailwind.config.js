@@ -7,26 +7,26 @@ export default {
   theme: {
     extend: {
          colors: {
-           // Xanh nước biển đậm làm chủ đạo
-           'ocean-deep': '#0B1426',      // Xanh đậm nhất
-           'ocean-dark': '#1A2332',      // Xanh đậm
-           'ocean-primary': '#1E3A8A',   // Xanh chính
-           'ocean-medium': '#3B82F6',    // Xanh trung bình
-           'ocean-light': '#60A5FA',     // Xanh nhạt
-           'ocean-pale': '#DBEAFE',      // Xanh rất nhạt
+          // Chủ đạo: Xanh - Đỏ - Trắng (UMT)
+          'ocean-deep': '#0B2E66',      // Xanh đậm nền tối (đi kèm trắng)
+          'ocean-dark': '#103A80',      // Xanh đậm
+          'ocean-primary': '#0057B7',   // Xanh chính (UMT Blue)
+          'ocean-medium': '#2C7BE5',    // Xanh trung bình (hover)
+          'ocean-light': '#60A5FA',     // Xanh nhạt
+          'ocean-pale': '#E3F2FD',      // Xanh rất nhạt nền
            
            // Màu phụ
-           'coral': '#FF6B6B',           // Cam san hô
-           'coral-light': '#FFB3B3',     // Cam san hô nhạt
+          'coral': '#DA291C',           // Đỏ chủ đạo (UMT Red)
+          'coral-light': '#F06A61',     // Đỏ nhạt/hover
            'gold': '#F59E0B',            // Vàng
            'gold-light': '#FCD34D',      // Vàng nhạt
            'silver': '#6B7280',          // Bạc
            'silver-light': '#D1D5DB',    // Bạc nhạt
            
            // Màu nền
-           'bg-primary': '#F8FAFC',      // Nền chính
-           'bg-secondary': '#F1F5F9',    // Nền phụ
-           'bg-dark': '#0F172A',         // Nền tối
+          'bg-primary': '#FFFFFF',      // Nền chính trắng
+          'bg-secondary': '#F7FAFF',    // Nền phụ xanh rất nhạt
+          'bg-dark': '#0B1426',         // Nền tối
            
            // Màu text
            'text-primary': '#1E293B',    // Text chính
@@ -34,13 +34,13 @@ export default {
            'text-light': '#94A3B8',      // Text nhạt
            
            // Giữ lại một số màu cũ để tương thích
-           'umt-blue': '#1E3A8A',
-           'umt-red': '#FF6B6B',
-           'umt-white': '#FFFFFF',
+          'umt-blue': '#0057B7',
+          'umt-red': '#DA291C',
+          'umt-white': '#FFFFFF',
            'umt-gray': '#F8FAFC',
            'umt-dark': '#0B1426',
-           'umt-light-blue': '#DBEAFE',
-           'umt-light-red': '#FFB3B3',
+          'umt-light-blue': '#E3F2FD',
+          'umt-light-red': '#FDE2E0',
            'umt-accent': '#F59E0B',
          },
       fontFamily: {

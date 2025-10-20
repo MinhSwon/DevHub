@@ -10,7 +10,14 @@ const Dashboard = () => {
     totalBookings: 12,
     upcomingBookings: 3,
     totalSpent: 2400000,
-    favoriteSport: 'Bóng đá'
+    favoriteSport: 'Bóng đá',
+    totalSteps: 125000,
+    weeklyGoal: 100000,
+    achievements: 8,
+    teamMemberships: 2,
+    challengesCompleted: 5,
+    currentRank: 15,
+    totalRank: 120
   });
 
   // Mock data for charts
@@ -45,35 +52,37 @@ const Dashboard = () => {
       format: 'number'
     },
     {
-      title: 'Sắp tới',
-      value: userStats.upcomingBookings,
-      change: -5.2,
-      changeType: 'negative',
+      title: 'Bước chân tuần',
+      value: userStats.totalSteps,
+      change: 25.0,
+      changeType: 'positive',
       icon: (
         <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+      ),
+      format: 'steps'
+    },
+    {
+      title: 'Thành tích',
+      value: userStats.achievements,
+      change: 2,
+      changeType: 'positive',
+      icon: (
+        <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
         </svg>
       ),
       format: 'number'
     },
     {
-      title: 'Đã chi tiêu',
-      value: userStats.totalSpent,
-      change: 8.1,
+      title: 'Xếp hạng',
+      value: `#${userStats.currentRank}`,
+      change: -3,
       changeType: 'positive',
       icon: (
-        <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-        </svg>
-      ),
-      format: 'currency'
-    },
-    {
-      title: 'Môn yêu thích',
-      value: userStats.favoriteSport,
-      icon: (
         <svg className="w-6 h-6 text-umt-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
         </svg>
       )
     }
@@ -81,25 +90,44 @@ const Dashboard = () => {
 
   const activities = [
     {
+      type: 'achievement',
+      title: 'Nhận huy hiệu "Chạy bộ 5km"',
+      description: 'Hoàn thành thử thách chạy bộ tuần này',
+      time: '5 phút trước',
+      status: 'success',
+      icon: '🏆'
+    },
+    {
+      type: 'challenge',
+      title: 'Thử thách mới: "Plank 3 phút"',
+      description: 'Thử thách mới đã được mở khóa',
+      time: '1 giờ trước',
+      status: 'info',
+      icon: '💪'
+    },
+    {
+      type: 'team',
+      title: 'Được mời tham gia đội bóng đá',
+      description: 'Đội "UMT Warriors" mời bạn tham gia',
+      time: '2 giờ trước',
+      status: 'warning',
+      icon: '⚽'
+    },
+    {
+      type: 'ranking',
+      title: 'Tăng hạng lên #15',
+      description: 'Xếp hạng toàn trường tăng 3 bậc',
+      time: '3 giờ trước',
+      status: 'success',
+      icon: '📈'
+    },
+    {
       type: 'booking',
       title: 'Đặt sân bóng đá A1',
       description: 'Đặt sân thành công cho ngày 20/01/2024',
-      time: '2 phút trước',
-      status: 'success'
-    },
-    {
-      type: 'payment',
-      title: 'Thanh toán thành công',
-      description: 'Thanh toán 200,000 VNĐ cho đặt sân',
-      time: '1 giờ trước',
-      status: 'success'
-    },
-    {
-      type: 'event',
-      title: 'Tham gia sự kiện',
-      description: 'Đăng ký tham gia giải bóng đá sinh viên',
-      time: '3 giờ trước',
-      status: 'warning'
+      time: '4 giờ trước',
+      status: 'success',
+      icon: '🏟️'
     }
   ];
 
@@ -165,6 +193,9 @@ const Dashboard = () => {
 
   const tabs = [
     { id: 'overview', name: 'Tổng quan', icon: '📊' },
+    { id: 'training', name: 'Luyện tập', icon: '💪' },
+    { id: 'community', name: 'Cộng đồng', icon: '👥' },
+    { id: 'achievements', name: 'Thành tích', icon: '🏆' },
     { id: 'bookings', name: 'Đặt sân', icon: '🏟️' },
     { id: 'events', name: 'Sự kiện', icon: '🎉' },
     { id: 'profile', name: 'Hồ sơ', icon: '👤' }
@@ -301,6 +332,8 @@ const Dashboard = () => {
                           <p className="text-2xl font-bold text-gray-900 mt-1">
                             {stat.format === 'currency' 
                               ? `${stat.value.toLocaleString('vi-VN')}₫`
+                              : stat.format === 'steps'
+                              ? `${stat.value.toLocaleString('vi-VN')} bước`
                               : stat.format === 'number'
                               ? stat.value
                               : stat.value
@@ -397,6 +430,39 @@ const Dashboard = () => {
                             {getStatusText(booking.status)}
                           </span>
                           <p className="text-sm text-gray-600 mt-1">{booking.price.toLocaleString('vi-VN')}₫</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Recent Activities */}
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-semibold text-gray-900">📱 Hoạt động gần đây</h2>
+                    <Link to="/community" className="text-umt-blue hover:text-blue-700 font-medium">
+                      Xem tất cả
+                    </Link>
+                  </div>
+                  <div className="space-y-4">
+                    {activities.map((activity, index) => (
+                      <div key={index} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                        <div className="w-12 h-12 bg-gradient-to-br from-umt-blue to-blue-600 rounded-lg flex items-center justify-center">
+                          <span className="text-2xl">{activity.icon}</span>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-medium text-gray-900">{activity.title}</h3>
+                          <p className="text-sm text-gray-600">{activity.description}</p>
+                        </div>
+                        <div className="text-right">
+                          <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                            activity.status === 'success' ? 'bg-green-100 text-green-800' :
+                            activity.status === 'warning' ? 'bg-yellow-100 text-yellow-800' :
+                            activity.status === 'info' ? 'bg-blue-100 text-blue-800' :
+                            'bg-gray-100 text-gray-800'
+                          }`}>
+                            {activity.time}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -529,6 +595,230 @@ const Dashboard = () => {
                             </button>
                           </div>
                         </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Training Tab */}
+            {activeTab === 'training' && (
+              <div className="space-y-6">
+                {/* Weekly Goal Progress */}
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-6">🎯 Mục tiêu tuần này</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="text-center">
+                      <div className="w-24 h-24 mx-auto mb-4 relative">
+                        <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="40" stroke="#e5e7eb" strokeWidth="8" fill="none"/>
+                          <circle 
+                            cx="50" cy="50" r="40" 
+                            stroke="#10b981" 
+                            strokeWidth="8" 
+                            fill="none"
+                            strokeDasharray={`${2 * Math.PI * 40}`}
+                            strokeDashoffset={`${2 * Math.PI * 40 * (1 - userStats.totalSteps / userStats.weeklyGoal)}`}
+                            className="transition-all duration-1000"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-lg font-bold text-gray-900">
+                            {Math.round((userStats.totalSteps / userStats.weeklyGoal) * 100)}%
+                          </span>
+                        </div>
+                      </div>
+                      <h3 className="font-semibold text-gray-900">Bước chân</h3>
+                      <p className="text-sm text-gray-600">{userStats.totalSteps.toLocaleString('vi-VN')} / {userStats.weeklyGoal.toLocaleString('vi-VN')}</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-umt-blue to-blue-600 rounded-full flex items-center justify-center">
+                        <span className="text-2xl text-white">🏃</span>
+                      </div>
+                      <h3 className="font-semibold text-gray-900">Chạy bộ</h3>
+                      <p className="text-sm text-gray-600">3/5 buổi</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-umt-red to-red-600 rounded-full flex items-center justify-center">
+                        <span className="text-2xl text-white">💪</span>
+                      </div>
+                      <h3 className="font-semibold text-gray-900">Gym</h3>
+                      <p className="text-sm text-gray-600">2/4 buổi</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Current Challenges */}
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-6">🔥 Thử thách đang tham gia</h2>
+                  <div className="space-y-4">
+                    <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-300">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
+                            <span className="text-2xl">🏃</span>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900">Chạy 5km trong tuần</h3>
+                            <p className="text-sm text-gray-600">Còn lại 2 ngày</p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="w-32 bg-gray-200 rounded-full h-2 mb-2">
+                            <div className="bg-gradient-to-r from-yellow-400 to-orange-500 h-2 rounded-full" style={{width: '60%'}}></div>
+                          </div>
+                          <span className="text-sm text-gray-600">3/5 km</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-300">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
+                            <span className="text-2xl">💪</span>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900">Plank 3 phút mỗi ngày</h3>
+                            <p className="text-sm text-gray-600">Còn lại 4 ngày</p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="w-32 bg-gray-200 rounded-full h-2 mb-2">
+                            <div className="bg-gradient-to-r from-green-400 to-green-600 h-2 rounded-full" style={{width: '40%'}}></div>
+                          </div>
+                          <span className="text-sm text-gray-600">3/7 ngày</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Community Tab */}
+            {activeTab === 'community' && (
+              <div className="space-y-6">
+                {/* Leaderboard */}
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-6">🏆 Bảng xếp hạng UMT</h2>
+                  <div className="space-y-4">
+                    {[1,2,3,4,5].map((rank) => (
+                      <div key={rank} className={`flex items-center justify-between p-4 rounded-lg ${
+                        rank === userStats.currentRank ? 'bg-gradient-to-r from-umt-blue to-blue-600 text-white' : 'bg-gray-50'
+                      }`}>
+                        <div className="flex items-center space-x-4">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                            rank <= 3 ? 'bg-yellow-400 text-white' : 'bg-gray-300 text-gray-700'
+                          }`}>
+                            {rank}
+                          </div>
+                          <div>
+                            <h3 className="font-semibold">
+                              {rank === userStats.currentRank ? 'Bạn' : `Sinh viên ${rank}`}
+                            </h3>
+                            <p className="text-sm opacity-75">
+                              {rank === userStats.currentRank ? 'Khoa CNTT' : 'Khoa CNTT'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-bold">{12500 - rank * 200} điểm</p>
+                          <p className="text-sm opacity-75">{15 - rank} hoạt động</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Teams */}
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-6">👥 Đội của bạn</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-300">
+                      <div className="flex items-center space-x-4 mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-umt-blue to-blue-600 rounded-lg flex items-center justify-center">
+                          <span className="text-2xl text-white">⚽</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900">UMT Warriors</h3>
+                          <p className="text-sm text-gray-600">Đội bóng đá</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-600">8/11 thành viên</span>
+                        <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full">Hoạt động</span>
+                      </div>
+                    </div>
+                    <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-300">
+                      <div className="flex items-center space-x-4 mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-umt-red to-red-600 rounded-lg flex items-center justify-center">
+                          <span className="text-2xl text-white">🏃</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900">Running Club</h3>
+                          <p className="text-sm text-gray-600">Câu lạc bộ chạy bộ</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-600">15/20 thành viên</span>
+                        <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full">Hoạt động</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Achievements Tab */}
+            {activeTab === 'achievements' && (
+              <div className="space-y-6">
+                {/* Achievement Stats */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+                    <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="text-3xl">🏆</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900">{userStats.achievements}</h3>
+                    <p className="text-gray-600">Huy hiệu đã nhận</p>
+                  </div>
+                  <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+                    <div className="w-16 h-16 bg-gradient-to-br from-umt-blue to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="text-3xl">🎯</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900">{userStats.challengesCompleted}</h3>
+                    <p className="text-gray-600">Thử thách hoàn thành</p>
+                  </div>
+                  <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+                    <div className="w-16 h-16 bg-gradient-to-br from-umt-red to-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="text-3xl">📈</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900">#{userStats.currentRank}</h3>
+                    <p className="text-gray-600">Xếp hạng hiện tại</p>
+                  </div>
+                </div>
+
+                {/* Recent Achievements */}
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-6">🏆 Thành tích gần đây</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {[
+                      { title: 'Chạy bộ 5km', description: 'Hoàn thành thử thách chạy bộ', icon: '🏃', date: 'Hôm nay' },
+                      { title: 'Thành viên tích cực', description: 'Tham gia 10 hoạt động', icon: '⭐', date: '2 ngày trước' },
+                      { title: 'Đội trưởng', description: 'Tạo đội đầu tiên', icon: '👑', date: '1 tuần trước' },
+                      { title: 'Người mới', description: 'Tham gia UMT Sport Hub', icon: '🎉', date: '2 tuần trước' }
+                    ].map((achievement, index) => (
+                      <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-300">
+                        <div className="flex items-center space-x-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
+                            <span className="text-xl">{achievement.icon}</span>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900">{achievement.title}</h3>
+                            <p className="text-sm text-gray-600">{achievement.date}</p>
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-600">{achievement.description}</p>
                       </div>
                     ))}
                   </div>
