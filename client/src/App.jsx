@@ -24,7 +24,6 @@ import Achievements from './pages/Achievements';
 import LogoDemo from './pages/LogoDemo';
 import HeaderDemo from './pages/HeaderDemo';
 import BannerDemo from './pages/BannerDemo';
-import TestPage from './pages/TestPage';
 import OceanThemeDemo from './pages/OceanThemeDemo';
 import UMTShowcase from './pages/UMTShowcase';
 
@@ -57,7 +56,6 @@ function App() {
                      <Route path="/logo-demo" element={<LogoDemo />} />
                      <Route path="/header-demo" element={<HeaderDemo />} />
                      <Route path="/banner-demo" element={<BannerDemo />} />
-                     <Route path="/test" element={<TestPage />} />
                      <Route path="/ocean-theme" element={<OceanThemeDemo />} />
                      <Route path="/umt-showcase" element={<UMTShowcase />} />
                    </Routes>

@@ -52,11 +52,6 @@ const Home = () => {
           </Link>
         </div>
         
-        <div className="text-center mt-8">
-          <Link to="/test" className="bg-red-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-600 transition-colors">
-            Test Page
-          </Link>
-        </div>
       </div>
     </div>
   );
