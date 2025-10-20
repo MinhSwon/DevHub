@@ -50,6 +50,14 @@ const Navbar = () => {
                 <span className="text-xl mb-1 group-hover:scale-110 transition-transform duration-300">👥</span>
                 <span className="text-xs font-medium">Cộng đồng</span>
               </Link>
+              <Link to="/training" className="nav-link flex flex-col items-center p-3 rounded-xl hover:bg-ocean-pale transition-all duration-300 group">
+                <span className="text-xl mb-1 group-hover:scale-110 transition-transform duration-300">💪</span>
+                <span className="text-xs font-medium">Luyện tập</span>
+              </Link>
+              <Link to="/teams" className="nav-link flex flex-col items-center p-3 rounded-xl hover:bg-ocean-pale transition-all duration-300 group">
+                <span className="text-xl mb-1 group-hover:scale-110 transition-transform duration-300">👥</span>
+                <span className="text-xs font-medium">Đội nhóm</span>
+              </Link>
               <Link to="/contact" className="nav-link flex flex-col items-center p-3 rounded-xl hover:bg-ocean-pale transition-all duration-300 group">
                 <span className="text-xl mb-1 group-hover:scale-110 transition-transform duration-300">📞</span>
                 <span className="text-xs font-medium">Liên hệ</span>

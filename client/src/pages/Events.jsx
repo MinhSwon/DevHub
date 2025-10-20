@@ -1,9 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Events = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedDate, setSelectedDate] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [timeLeft, setTimeLeft] = useState({});
+
+  // Countdown timer effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const newTimeLeft = {};
+      
+      events.forEach(event => {
+        const eventTime = new Date(`${event.date} ${event.time}`).getTime();
+        const distance = eventTime - now;
+        
+        if (distance > 0) {
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          
+          newTimeLeft[event.id] = { days, hours, minutes, seconds };
+        } else {
+          newTimeLeft[event.id] = null;
+        }
+      });
+      
+      setTimeLeft(newTimeLeft);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const categories = [
     { id: 'all', name: 'Tất cả', icon: '🎉' },
@@ -25,7 +54,7 @@ const Events = () => {
       id: 1,
       title: 'Giải bóng đá sinh viên UMT 2024',
       category: 'tournament',
-      date: '2024-01-25',
+      date: '2024-02-15',
       time: '08:00',
       endTime: '18:00',
       location: 'Sân vận động chính',
@@ -36,13 +65,15 @@ const Events = () => {
       price: 0,
       status: 'upcoming',
       organizer: 'CLB Thể thao UMT',
-      tags: ['Bóng đá', 'Sinh viên', 'Giải đấu']
+      tags: ['Bóng đá', 'Sinh viên', 'Giải đấu'],
+      featured: true,
+      priority: 'high'
     },
     {
       id: 2,
       title: 'Workshop kỹ thuật Tennis cơ bản',
       category: 'workshop',
-      date: '2024-01-28',
+      date: '2024-02-20',
       time: '14:00',
       endTime: '17:00',
       location: 'Sân Tennis T1',
@@ -53,7 +84,9 @@ const Events = () => {
       price: 50000,
       status: 'upcoming',
       organizer: 'CLB Tennis UMT',
-      tags: ['Tennis', 'Kỹ thuật', 'Học tập']
+      tags: ['Tennis', 'Kỹ thuật', 'Học tập'],
+      featured: false,
+      priority: 'medium'
     },
     {
       id: 3,
@@ -214,9 +247,131 @@ const Events = () => {
           </div>
         </div>
 
+        {/* Featured Events */}
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+            🔥 Sự Kiện Nổi Bật
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {events.filter(event => event.featured).map((event, index) => (
+              <div key={event.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift animate-fade-in">
+                <div className="relative">
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-gradient-to-r from-umt-red to-red-600 text-white px-4 py-2 rounded-full text-sm font-bold">
+                      ⭐ SỰ KIỆN NỔI BẬT
+                    </span>
+                  </div>
+                  <div className="absolute top-4 right-4">
+                    <span className="bg-white text-gray-800 px-3 py-1 rounded-full text-sm font-medium">
+                      {event.price === 0 ? 'Miễn phí' : `${event.price.toLocaleString('vi-VN')} VNĐ`}
+                    </span>
+                  </div>
+                  
+                  {/* Countdown Timer */}
+                  {timeLeft[event.id] && (
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <div className="bg-black bg-opacity-75 text-white p-4 rounded-lg">
+                        <div className="text-center mb-2">
+                          <span className="text-sm font-medium">Còn lại:</span>
+                        </div>
+                        <div className="grid grid-cols-4 gap-2 text-center">
+                          <div className="bg-umt-red rounded-lg p-2">
+                            <div className="text-lg font-bold">{timeLeft[event.id].days}</div>
+                            <div className="text-xs">Ngày</div>
+                          </div>
+                          <div className="bg-umt-blue rounded-lg p-2">
+                            <div className="text-lg font-bold">{timeLeft[event.id].hours}</div>
+                            <div className="text-xs">Giờ</div>
+                          </div>
+                          <div className="bg-green-600 rounded-lg p-2">
+                            <div className="text-lg font-bold">{timeLeft[event.id].minutes}</div>
+                            <div className="text-xs">Phút</div>
+                          </div>
+                          <div className="bg-yellow-600 rounded-lg p-2">
+                            <div className="text-lg font-bold">{timeLeft[event.id].seconds}</div>
+                            <div className="text-xs">Giây</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                    {event.title}
+                  </h3>
+                  
+                  <div className="flex items-center text-sm text-gray-600 mb-3">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21l3-3m0 0l3 3m-3-3v-3"/>
+                    </svg>
+                    <span>{formatDate(event.date)}</span>
+                  </div>
+                  
+                  <div className="flex items-center text-sm text-gray-600 mb-3">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>{event.time} - {event.endTime}</span>
+                  </div>
+                  
+                  <div className="flex items-center text-sm text-gray-600 mb-4">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    <span>{event.location}</span>
+                  </div>
+                  
+                  <p className="text-gray-600 mb-4 line-clamp-3">
+                    {event.description}
+                  </p>
+                  
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center text-sm text-gray-600">
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                      </svg>
+                      <span>{event.participants}/{event.maxParticipants} người</span>
+                    </div>
+                    <div className="w-24 bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="bg-gradient-to-r from-umt-red to-red-600 h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${(event.participants / event.maxParticipants) * 100}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex space-x-3">
+                    <button className="flex-1 bg-gradient-to-r from-umt-red to-red-600 text-white py-3 px-4 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 font-medium shadow-lg hover:shadow-xl">
+                      Đăng ký ngay
+                    </button>
+                    <button className="bg-gray-100 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-200 transition-colors duration-300">
+                      Chi tiết
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* All Events */}
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+            📅 Tất Cả Sự Kiện
+          </h2>
+        </div>
+
         {/* Events Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredEvents.map((event, index) => (
+          {filteredEvents.filter(event => !event.featured).map((event, index) => (
             <div key={event.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
               <div className="relative">
                 <img
@@ -234,6 +389,19 @@ const Events = () => {
                     {event.price === 0 ? 'Miễn phí' : `${event.price.toLocaleString('vi-VN')} VNĐ`}
                   </span>
                 </div>
+                
+                {/* Mini Countdown Timer */}
+                {timeLeft[event.id] && (
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="bg-black bg-opacity-60 text-white p-2 rounded-lg">
+                      <div className="flex justify-center space-x-2 text-xs">
+                        <span className="bg-umt-red px-2 py-1 rounded">{timeLeft[event.id].days}d</span>
+                        <span className="bg-umt-blue px-2 py-1 rounded">{timeLeft[event.id].hours}h</span>
+                        <span className="bg-green-600 px-2 py-1 rounded">{timeLeft[event.id].minutes}m</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
               
               <div className="p-6">

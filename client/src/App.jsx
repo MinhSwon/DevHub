@@ -15,7 +15,7 @@ import Dashboard from './pages/Dashboard';
 import About from './pages/About';
 import Events from './pages/Events';
 import Facilities from './pages/Facilities';
-import Community from './pages/Community';
+import Teams from './pages/Teams';
 import LogoDemo from './pages/LogoDemo';
 import HeaderDemo from './pages/HeaderDemo';
 import BannerDemo from './pages/BannerDemo';
@@ -44,6 +44,8 @@ function App() {
                      <Route path="/events" element={<Events />} />
                      <Route path="/facilities" element={<Facilities />} />
                      <Route path="/community" element={<Community />} />
+                     <Route path="/training" element={<Training />} />
+                     <Route path="/teams" element={<Teams />} />
                      <Route path="/logo-demo" element={<LogoDemo />} />
                      <Route path="/header-demo" element={<HeaderDemo />} />
                      <Route path="/banner-demo" element={<BannerDemo />} />
