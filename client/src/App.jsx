@@ -15,6 +15,8 @@ import Dashboard from './pages/Dashboard';
 import About from './pages/About';
 import Events from './pages/Events';
 import Facilities from './pages/Facilities';
+import Community from './pages/Community';
+import Training from './pages/Training';
 import Teams from './pages/Teams';
 import Profile from './pages/Profile';
 import Media from './pages/Media';
