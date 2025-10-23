@@ -14,13 +14,13 @@ export const registerUser = async (req, res) => {
 
   try {
     // Check if user already exists
-    const [usersByEmail] = await db.query('SELECT email FROM Users WHERE email = ?', [email]);
-    if (usersByEmail.length > 0) {
+    const usersByEmail = await db.query('SELECT email FROM Users WHERE email = $1', [email]);
+    if (usersByEmail.rows.length > 0) {
       return res.status(400).json({ msg: 'User already exists' });
     }
     if (phone) {
-      const [usersByPhone] = await db.query('SELECT phone_number FROM Users WHERE phone_number = ?', [phone]);
-      if (usersByPhone.length > 0) {
+      const usersByPhone = await db.query('SELECT phone_number FROM Users WHERE phone_number = $1', [phone]);
+      if (usersByPhone.rows.length > 0) {
         return res.status(400).json({ msg: 'Phone already in use' });
       }
     }
@@ -30,11 +30,11 @@ export const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Save user to database (Users schema)
-    const [result] = await db.query(
-      'INSERT INTO Users (full_name, phone_number, password_hash, email, role) VALUES (?, ?, ?, ?, ?)',
+    const result = await db.query(
+      'INSERT INTO Users (full_name, phone_number, password_hash, email, role) VALUES ($1, $2, $3, $4, $5) RETURNING user_id',
       [name, phone || '', hashedPassword, email, 'customer']
     );
-    const userId = result.insertId;
+    const userId = result.rows[0].user_id;
 
     // Create and sign JWT
     const payload = { user: { id: userId } };
@@ -59,12 +59,12 @@ export const loginUser = async (req, res) => {
   
     try {
       // Check for user
-      const [users] = await db.query('SELECT * FROM Users WHERE email = ?', [email]);
-      if (users.length === 0) {
+      const users = await db.query('SELECT * FROM Users WHERE email = $1', [email]);
+      if (users.rows.length === 0) {
         return res.status(400).json({ msg: 'Invalid Credentials' });
       }
       
-      const user = users[0];
+      const user = users.rows[0];
 
       // Check password
       const isMatch = await bcrypt.compare(password, user.password_hash);
