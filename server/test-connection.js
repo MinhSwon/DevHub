@@ -1,7 +1,9 @@
+console.log('--- Script starting now ---');
 import db from './src/config/db.js';
 import 'dotenv/config';
 
 async function testConnection() {
+  console.log('--- testConnection function invoked ---');
   console.log('🔄 Testing database connection...');
   console.log(`Host: ${process.env.DB_HOST}`);
   console.log(`Port: ${process.env.DB_PORT}`);
@@ -9,8 +11,10 @@ async function testConnection() {
   console.log(`User: ${process.env.DB_USER}`);
   
   try {
+    console.log('--- Attempting db.connect()... This may take up to 30 seconds to timeout. ---');
     // Test basic connection
     const client = await db.connect();
+    console.log('--- db.connect() was successful. ---');
     console.log('✅ Database connection successful!');
     
     // Test a simple query
