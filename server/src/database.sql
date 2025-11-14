@@ -43,13 +43,6 @@ BEGIN
         CREATE TYPE media_type_enum AS ENUM ('image', 'video');
     END IF;
 END$$;
-
-
--- ====================================================================
--- PHẦN B: TẠO HÀM TRIGGER ĐỂ TỰ ĐỘNG CẬP NHẬT `updated_at`
--- PostgreSQL không có `ON UPDATE CURRENT_TIMESTAMP`, ta dùng trigger để thay thế.
--- ====================================================================
-
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $$
 BEGIN

@@ -1,4 +1,4 @@
- import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 
@@ -21,15 +21,26 @@ const Booking = () => {
     amenities: []
   });
 
-  const sports = useMemo(() => ([
-    { id: 'all', name: 'Tất cả', icon: '🏟️' },
-    { id: '5v5', name: 'Bóng đá 5v5', icon: '⚽' },
-    { id: '7v7', name: 'Bóng đá 7v7', icon: '🏟️' },
-    { id: '11v11', name: 'Bóng đá 11v11', icon: '🏟️' },
-    { id: 'badminton', name: 'Cầu lông', icon: '🏸' },
-    { id: 'tennis', name: 'Tennis', icon: '🎾' },
-    { id: 'basketball', name: 'Bóng rổ', icon: '🏀' }
-  ]), []);
+  const sports = useMemo(
+    () => [
+      { id: 'all', name: 'Tất cả sân', icon: '🌐', count: 25, pitchTypes: [] },
+      { id: 'pickleball', name: 'Pickleball', icon: '🏓', count: 7, pitchTypes: ['pickleball'] },
+      { id: '5v5', name: 'Bóng đá 5 người', icon: '⚽', count: 11, pitchTypes: ['5v5', 'football-5', 'mini'] },
+      { id: '7v7', name: 'Bóng đá 7 người', icon: '🥅', count: 3, pitchTypes: ['7v7', 'football-7'] },
+      { id: '11v11', name: 'Bóng đá 11 người', icon: '🏟️', count: 1, pitchTypes: ['11v11', 'football-11'] },
+      { id: 'basketball', name: 'Bóng rổ', icon: '🏀', count: 1, pitchTypes: ['basketball'] },
+      { id: 'volleyball', name: 'Bóng chuyền', icon: '🏐', count: 2, pitchTypes: ['volleyball'] }
+    ],
+    [],
+  );
+
+  const sportFilterMap = useMemo(() => {
+    const map = {};
+    sports.forEach((sport) => {
+      map[sport.id] = sport;
+    });
+    return map;
+  }, [sports]);
 
   const amenities = useMemo(() => ([
     { id: 'parking', name: 'Bãi đỗ xe', icon: '🅿️' },
@@ -46,6 +57,60 @@ const Booking = () => {
     { id: 'medium', name: '100k - 200k', min: 100000, max: 200000 },
     { id: 'high', name: 'Trên 200k', min: 200000, max: Infinity }
   ]), []);
+
+  const sportOverview = useMemo(
+    () => [
+      {
+        id: 'pickleball',
+        label: 'Sân Pickleball',
+        count: 7,
+        description: 'Mặt sân acrylic, vạch kẻ chuẩn thi đấu và trần cao 12m.',
+        filterId: 'pickleball',
+        icon: '🏓',
+      },
+      {
+        id: 'football-5',
+        label: 'Sân bóng đá 5 người',
+        count: 11,
+        description: 'Cụm sân mini, có khu vực nghỉ mát và tủ đồ thông minh.',
+        filterId: '5v5',
+        icon: '⚽',
+      },
+      {
+        id: 'football-7',
+        label: 'Sân bóng đá 7 người',
+        count: 3,
+        description: 'Sân tiêu chuẩn 7 người với hệ thống đèn LED 4 cột.',
+        filterId: '7v7',
+        icon: '🥅',
+      },
+      {
+        id: 'football-11',
+        label: 'Sân bóng đá 11 người',
+        count: 1,
+        description: 'Sân trung tâm, hỗ trợ tổ chức giải đấu nội bộ và ngoại khóa.',
+        filterId: '11v11',
+        icon: '🏟️',
+      },
+      {
+        id: 'basketball',
+        label: 'Sân bóng rổ',
+        count: 1,
+        description: 'Sàn gỗ tiêu chuẩn FIBA, bảng điểm điện tử đồng bộ.',
+        filterId: 'basketball',
+        icon: '🏀',
+      },
+      {
+        id: 'volleyball',
+        label: 'Sân bóng chuyền',
+        count: 2,
+        description: 'Sân trong nhà với lưới FIVB và ghế khán giả di động.',
+        filterId: 'volleyball',
+        icon: '🏐',
+      },
+    ],
+    [],
+  );
 
   useEffect(() => {
     const loadPitches = async () => {
@@ -87,14 +152,14 @@ const Booking = () => {
   }, [selectedPitchId, selectedDate]);
 
   const filteredPitches = useMemo(() => {
-    return pitches.filter(pitch => {
-      // Sport filter
-      if (filters.sport !== 'all' && pitch.pitch_type !== filters.sport) {
-        return false;
-      }
-      return true;
+    return pitches.filter((pitch) => {
+      if (filters.sport === 'all') return true;
+      const sport = sportFilterMap[filters.sport];
+      if (!sport) return true;
+      if (!sport.pitchTypes || sport.pitchTypes.length === 0) return true;
+      return sport.pitchTypes.includes(pitch.pitch_type);
     });
-  }, [pitches, filters]);
+  }, [pitches, filters, sportFilterMap]);
 
   const selectedPitch = useMemo(() => pitches.find(p => p.pitch_id === selectedPitchId), [pitches, selectedPitchId]);
 
@@ -184,9 +249,9 @@ const Booking = () => {
                
                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                  <div className="text-center">
-                   <h1 className="text-4xl md:text-5xl font-bold mb-4">⚽ Đặt Sân Thể Thao</h1>
-                   <p className="text-xl opacity-90 max-w-3xl mx-auto">
-                     Chọn sân thể thao yêu thích và đặt lịch ngay hôm nay với hệ thống thông minh
+                   <h1 className="text-4xl md:text-5xl font-bold mb-4">🏟️ Đặt 25 sân thể thao UMT theo thời gian thực</h1>
+                  <p className="text-xl opacity-90 max-w-3xl mx-auto">
+                     Từ 7 sân Pickleball đến 15 sân bóng đá và các sân trong nhà, chọn lịch phù hợp và đặt trong 60 giây với hệ thống thông minh.
                    </p>
                  </div>
                </div>
@@ -207,14 +272,23 @@ const Booking = () => {
                     <button
                       key={sport.id}
                       onClick={() => setFilters(prev => ({ ...prev, sport: sport.id }))}
-                      className={`w-full text-left px-3 py-2 rounded-lg transition-all duration-200 ${
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-all duration-200 ${
                         filters.sport === sport.id
                           ? 'bg-ocean-primary text-white'
                           : 'text-gray-600 hover:bg-ocean-pale hover:text-ocean-primary'
                       }`}
                     >
-                      <span className="mr-2">{sport.icon}</span>
-                      {sport.name}
+                      <span className="flex items-center space-x-2">
+                        <span>{sport.icon}</span>
+                        <span>{sport.name}</span>
+                      </span>
+                      {sport.id !== 'all' && (
+                        <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
+                          filters.sport === sport.id ? 'bg-white/20 text-white' : 'bg-ocean-pale text-ocean-primary'
+                        }`}>
+                          {sport.count}
+                        </span>
+                      )}
                     </button>
                   ))}
                 </div>
@@ -460,6 +534,46 @@ const Booking = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Sport Overview */}
+        <div className="mt-12">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900">Danh mục sân thể thao</h2>
+              <p className="text-gray-600 mt-2">
+                Tất cả sân trong khu phức hợp UMT Sport Hub đều có sẵn để đặt nhanh. Chọn một loại sân để lọc lịch hiển thị ngay lập tức.
+              </p>
+            </div>
+            <div className="text-sm text-gray-500 bg-white border border-ocean-pale rounded-full px-4 py-2">
+              🌟 Tổng cộng 25 sân, đặt trước tối đa 14 ngày
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+            {sportOverview.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setFilters((prev) => ({ ...prev, sport: item.filterId }))}
+                className={`text-left rounded-3xl border-2 p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg ${
+                  filters.sport === item.filterId
+                    ? 'border-ocean-primary bg-ocean-pale'
+                    : 'border-ocean-pale bg-white'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-3xl">{item.icon}</span>
+                  <span className="inline-flex items-center justify-center text-sm font-semibold px-3 py-1 rounded-full bg-ocean-primary text-white">
+                    {item.count} sân
+                  </span>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900">{item.label}</h3>
+                <p className="mt-2 text-sm text-gray-600">{item.description}</p>
+                <span className="mt-4 inline-flex items-center text-sm font-semibold text-ocean-primary">
+                  Lọc lịch sân →
+                </span>
+              </button>
+            ))}
           </div>
         </div>
 

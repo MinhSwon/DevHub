@@ -123,7 +123,7 @@ const Footer = () => {
                 <span className="text-umt-blue text-lg">📞</span>
                 <div>
                   <p className="text-gray-400 text-sm">Hotline</p>
-                  <p className="text-white font-semibold">123456</p>
+                  <p className="text-white font-semibold">0912637112</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
@@ -137,7 +137,7 @@ const Footer = () => {
                 <span className="text-umt-blue text-lg">📍</span>
                 <div>
                   <p className="text-gray-400 text-sm">Địa chỉ</p>
-                  <p className="text-white font-semibold">123 Nguyễn Văn B, Quận 7, TP.HCM</p>
+                  <p className="text-white font-semibold">60CL STREET, CAT LAI WARD, THU DUC CITY, HO CHI MINH CITY</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">

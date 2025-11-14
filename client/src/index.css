@@ -805,3 +805,12 @@ html {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Decorative backgrounds */
+.bg-pickleball-pattern {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8) 0, rgba(255, 255, 255, 0.05) 45%, transparent 60%),
+    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.7) 0, rgba(255, 255, 255, 0.05) 45%, transparent 60%),
+    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.6) 0, rgba(255, 255, 255, 0.05) 40%, transparent 60%);
+  background-size: 340px 340px, 280px 280px, 220px 220px;
+}

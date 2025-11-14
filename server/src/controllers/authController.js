@@ -14,27 +14,21 @@ export const registerUser = async (req, res) => {
 
   try {
     // Check if user already exists
-    const usersByEmail = await db.query('SELECT email FROM Users WHERE email = $1', [email]);
+    const usersByEmail = await db.query('SELECT email FROM users WHERE email = $1', [email]);
     if (usersByEmail.rows.length > 0) {
       return res.status(400).json({ msg: 'User already exists' });
-    }
-    if (phone) {
-      const usersByPhone = await db.query('SELECT phone_number FROM Users WHERE phone_number = $1', [phone]);
-      if (usersByPhone.rows.length > 0) {
-        return res.status(400).json({ msg: 'Phone already in use' });
-      }
     }
 
     // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Save user to database (Users schema)
+    // Save user to database (users schema)
     const result = await db.query(
-      'INSERT INTO Users (full_name, phone_number, password_hash, email, role) VALUES ($1, $2, $3, $4, $5) RETURNING user_id',
-      [name, phone || '', hashedPassword, email, 'customer']
+      'INSERT INTO users (full_name, password_hash, email, role, status) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+      [name, hashedPassword, email, 'student', 'pending_verification']
     );
-    const userId = result.rows[0].user_id;
+    const userId = result.rows[0].id;
 
     // Create and sign JWT
     const payload = { user: { id: userId } };
@@ -59,7 +53,7 @@ export const loginUser = async (req, res) => {
   
     try {
       // Check for user
-      const users = await db.query('SELECT * FROM Users WHERE email = $1', [email]);
+      const users = await db.query('SELECT * FROM users WHERE email = $1', [email]);
       if (users.rows.length === 0) {
         return res.status(400).json({ msg: 'Invalid Credentials' });
       }
@@ -73,11 +67,11 @@ export const loginUser = async (req, res) => {
       }
   
       // Create and sign JWT
-      const payload = { user: { id: user.user_id } };
+      const payload = { user: { id: user.id } };
   
       jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
         if (err) throw err;
-        res.json({ token, user: { id: user.user_id, name: user.full_name, email: user.email, phone: user.phone_number, role: user.role } });
+        res.json({ token, user: { id: user.id, name: user.full_name, email: user.email, role: user.role, status: user.status } });
       });
     } catch (err) {
       console.error(err.message);
