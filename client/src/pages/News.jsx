@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const News = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [newsArticles, setNewsArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const categories = [
     { id: 'all', name: 'Tất cả', icon: '📰' },
@@ -13,74 +16,37 @@ const News = () => {
     { id: 'community', name: 'Cộng đồng', icon: '👥' }
   ];
 
-  const newsArticles = [
-    {
-      id: 1,
-      title: 'Giải bóng đá sinh viên UMT 2024 chính thức khởi tranh',
-      excerpt: 'Giải đấu bóng đá sinh viên lớn nhất trong năm với sự tham gia của 32 đội bóng từ các khoa.',
-      content: 'Giải bóng đá sinh viên UMT 2024 đã chính thức khởi tranh với sự tham gia của 32 đội bóng từ các khoa trong trường. Giải đấu diễn ra trong 2 tháng với các trận đấu hấp dẫn...',
-      category: 'sports',
-      author: 'Phòng Công tác Sinh viên',
-      date: '2024-01-15',
-      image: 'https://images.unsplash.com/photo-1431324155629-1a6ce1c6c6c6?w=800&h=400&fit=crop',
-      featured: true
-    },
-    {
-      id: 2,
-      title: 'Khánh thành sân tennis mới tại khu thể thao UMT',
-      excerpt: 'Sân tennis hiện đại với mặt sân cỏ nhân tạo và hệ thống chiếu sáng LED tiết kiệm năng lượng.',
-      content: 'Sáng ngày 10/1/2024, Trường Đại học Quản lý và Công nghệ TP.HCM đã tổ chức lễ khánh thành sân tennis mới...',
-      category: 'facilities',
-      author: 'Ban Giám hiệu',
-      date: '2024-01-10',
-      image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=400&fit=crop',
-      featured: false
-    },
-    {
-      id: 3,
-      title: 'Workshop "Kỹ năng chơi bóng rổ cơ bản" dành cho sinh viên',
-      excerpt: 'Chương trình đào tạo kỹ năng bóng rổ miễn phí dành cho tất cả sinh viên yêu thích môn thể thao này.',
-      content: 'Nhằm nâng cao kỹ năng chơi bóng rổ cho sinh viên, CLB Thể thao UMT tổ chức workshop "Kỹ năng chơi bóng rổ cơ bản"...',
-      category: 'events',
-      author: 'CLB Thể thao UMT',
-      date: '2024-01-08',
-      image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&h=400&fit=crop',
-      featured: false
-    },
-    {
-      id: 4,
-      title: 'Cộng đồng thể thao UMT: Kết nối và phát triển',
-      excerpt: 'Cộng đồng thể thao UMT đã phát triển mạnh mẽ với hơn 1000 thành viên tích cực tham gia các hoạt động.',
-      content: 'Cộng đồng thể thao UMT đã trở thành một trong những cộng đồng sôi động nhất trong khu vực...',
-      category: 'community',
-      author: 'Cộng đồng UMT',
-      date: '2024-01-05',
-      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop',
-      featured: false
-    },
-    {
-      id: 5,
-      title: 'Hệ thống đặt sân thông minh: Công nghệ mới tại UMT',
-      excerpt: 'Hệ thống đặt sân trực tuyến mới với giao diện thân thiện và tính năng thanh toán điện tử.',
-      content: 'UMT Sports Hub đã triển khai hệ thống đặt sân thông minh mới với nhiều tính năng hiện đại...',
-      category: 'facilities',
-      author: 'Ban Công nghệ',
-      date: '2024-01-03',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop',
-      featured: false
-    },
-    {
-      id: 6,
-      title: 'Giải cầu lông mở rộng UMT 2024: Đăng ký bắt đầu',
-      excerpt: 'Giải cầu lông mở rộng dành cho tất cả sinh viên và cán bộ với giải thưởng hấp dẫn.',
-      content: 'Giải cầu lông mở rộng UMT 2024 chính thức mở đăng ký với sự tham gia của hơn 200 vận động viên...',
-      category: 'sports',
-      author: 'CLB Cầu lông UMT',
-      date: '2024-01-01',
-      image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=400&fit=crop',
-      featured: false
-    }
-  ];
+  // Load news posts from backend
+  useEffect(() => {
+    const fetchNews = async () => {
+      setIsLoading(true);
+      setError('');
+      try {
+        const res = await fetch('/api/content/posts/news');
+        if (!res.ok) throw new Error('Không tải được tin tức');
+        const data = await res.json();
+        const mapped = (Array.isArray(data) ? data : []).map((p, idx) => ({
+          id: p.id ?? idx + 1,
+          title: p.title,
+          excerpt: p.content?.slice(0, 150) || '',
+          content: p.content || '',
+          category: 'sports', // tạm mapping chung, có thể mở rộng sau
+          author: 'UMT Sports Hub',
+          date: p.created_at || new Date().toISOString(),
+          image:
+            'https://images.unsplash.com/photo-1431324155629-1a6ce1c6c6c6?w=800&h=400&fit=crop',
+          featured: idx === 0,
+        }));
+        setNewsArticles(mapped);
+      } catch (err) {
+        setError(err.message || 'Lỗi tải dữ liệu');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchNews();
+  }, []);
 
   const filteredArticles = newsArticles.filter(article => {
     const matchesCategory = selectedCategory === 'all' || article.category === selectedCategory;
@@ -186,6 +152,12 @@ const News = () => {
         )}
 
         {/* News Grid */}
+        {error && (
+          <div className="mb-4 text-center text-sm text-red-600">{error}</div>
+        )}
+        {isLoading && (
+          <div className="mb-4 text-center text-sm text-gray-500">Đang tải tin tức...</div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredArticles.map((article, index) => (
             <article key={article.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>

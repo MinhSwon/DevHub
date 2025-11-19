@@ -4,6 +4,7 @@ import cors from 'cors';
 import db from './config/db.js';
 import authRoutes from './routes/auth.js';
 import bookingRoutes from './routes/booking.js';
+import adminRoutes from './routes/admin.js';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/auth', authRoutes);
 app.use('/api', bookingRoutes);
+app.use('/api/admin', adminRoutes);
 
 // --- CÁC HÀM KHỞI TẠO VÀ SEED DATA ---
 

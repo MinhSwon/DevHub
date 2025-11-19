@@ -188,6 +188,10 @@ BEGIN
     END IF;
 END$$;
 
+-- Thêm cột category cho posts để phân biệt tin tức / cộng đồng / thông báo khác
+ALTER TABLE posts
+ADD COLUMN IF NOT EXISTS category VARCHAR(50) DEFAULT 'news';
+
 
 -- 10. Bảng comments
 CREATE TABLE IF NOT EXISTS comments (

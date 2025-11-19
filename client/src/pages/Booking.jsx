@@ -21,6 +21,44 @@ const Booking = () => {
     amenities: []
   });
 
+  // Danh sách sân mẫu dùng khi API backend chưa sẵn sàng
+  const mockPitches = useMemo(
+    () => [
+      // Pickleball (7 sân)
+      { pitch_id: 1, pitch_name: 'Pickleball A1', pitch_type: 'pickleball', surface_type: 'Acrylic', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Cơ sở chính', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 2, pitch_name: 'Pickleball A2', pitch_type: 'pickleball', surface_type: 'Acrylic', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Cơ sở chính', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 3, pitch_name: 'Pickleball B1', pitch_type: 'pickleball', surface_type: 'Acrylic', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Cơ sở chính', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 4, pitch_name: 'Pickleball B2', pitch_type: 'pickleball', surface_type: 'Acrylic', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Cơ sở chính', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 5, pitch_name: 'Pickleball C1', pitch_type: 'pickleball', surface_type: 'Acrylic', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Cơ sở chính', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 6, pitch_name: 'Pickleball C2', pitch_type: 'pickleball', surface_type: 'Acrylic', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Cơ sở chính', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 7, pitch_name: 'Pickleball Center Court', pitch_type: 'pickleball', surface_type: 'Acrylic', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Cơ sở chính', city: 'HCM', district: 'Quận 7' },
+      // Bóng đá 5 người (11 sân)
+      { pitch_id: 8, pitch_name: 'Sân 5 người A1', pitch_type: '5v5', surface_type: 'Artificial grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu ngoài trời', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 9, pitch_name: 'Sân 5 người A2', pitch_type: '5v5', surface_type: 'Artificial grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu ngoài trời', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 10, pitch_name: 'Sân 5 người A3', pitch_type: '5v5', surface_type: 'Artificial grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu ngoài trời', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 11, pitch_name: 'Sân 5 người B1', pitch_type: '5v5', surface_type: 'Artificial grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu ngoài trời', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 12, pitch_name: 'Sân 5 người B2', pitch_type: '5v5', surface_type: 'Artificial grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu ngoài trời', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 13, pitch_name: 'Sân 5 người B3', pitch_type: '5v5', surface_type: 'Artificial grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu ngoài trời', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 14, pitch_name: 'Sân 5 người C1', pitch_type: '5v5', surface_type: 'Artificial grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu ngoài trời', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 15, pitch_name: 'Sân 5 người C2', pitch_type: '5v5', surface_type: 'Artificial grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu ngoài trời', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 16, pitch_name: 'Sân 5 người C3', pitch_type: '5v5', surface_type: 'Artificial grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu ngoài trời', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 17, pitch_name: 'Sân 5 người D1', pitch_type: '5v5', surface_type: 'Artificial grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu ngoài trời', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 18, pitch_name: 'Sân 5 người D2', pitch_type: '5v5', surface_type: 'Artificial grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu ngoài trời', city: 'HCM', district: 'Quận 7' },
+      // Bóng đá 7 người (3 sân)
+      { pitch_id: 19, pitch_name: 'Sân 7 người A1', pitch_type: '7v7', surface_type: 'Natural grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu trung tâm', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 20, pitch_name: 'Sân 7 người A2', pitch_type: '7v7', surface_type: 'Natural grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu trung tâm', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 21, pitch_name: 'Sân 7 người VIP', pitch_type: '7v7', surface_type: 'Hybrid grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Sports Complex', address: 'Khu trung tâm', city: 'HCM', district: 'Quận 7' },
+      // Bóng đá 11 người (1 sân)
+      { pitch_id: 22, pitch_name: 'Sân 11 người trung tâm', pitch_type: '11v11', surface_type: 'Natural grass', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Stadium', address: 'Khu sân vận động', city: 'HCM', district: 'Quận 7' },
+      // Bóng rổ (1 sân)
+      { pitch_id: 23, pitch_name: 'Sân bóng rổ trong nhà', pitch_type: 'basketball', surface_type: 'Wood', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Indoor Arena', address: 'Khu nhà thi đấu', city: 'HCM', district: 'Quận 7' },
+      // Bóng chuyền (2 sân)
+      { pitch_id: 24, pitch_name: 'Sân bóng chuyền A', pitch_type: 'volleyball', surface_type: 'PVC', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Indoor Arena', address: 'Khu nhà thi đấu', city: 'HCM', district: 'Quận 7' },
+      { pitch_id: 25, pitch_name: 'Sân bóng chuyền B', pitch_type: 'volleyball', surface_type: 'PVC', image_url: null, status: 'available', venue_id: 1, venue_name: 'UMT Indoor Arena', address: 'Khu nhà thi đấu', city: 'HCM', district: 'Quận 7' },
+    ],
+    [],
+  );
+
   const sports = useMemo(
     () => [
       { id: 'all', name: 'Tất cả sân', icon: '🌐', count: 25, pitchTypes: [] },
@@ -120,16 +158,25 @@ const Booking = () => {
         const res = await fetch('/api/pitches');
         if (!res.ok) throw new Error('Không tải được danh sách sân');
         const data = await res.json();
-        setPitches(data);
-        if (data.length > 0) setSelectedPitchId(data[0].pitch_id);
+        if (Array.isArray(data) && data.length > 0) {
+          setPitches(data);
+          setSelectedPitchId(data[0].pitch_id);
+        } else {
+          // Nếu backend trả về rỗng, dùng danh sách mẫu
+          setPitches(mockPitches);
+          setSelectedPitchId(mockPitches[0]?.pitch_id || null);
+        }
       } catch (e) {
-        setError(e.message || 'Lỗi tải dữ liệu');
+        // Nếu gọi API lỗi hoàn toàn, fallback sang danh sách sân mẫu
+        setPitches(mockPitches);
+        setSelectedPitchId(mockPitches[0]?.pitch_id || null);
+        setError('Hiển thị danh sách sân mẫu do hệ thống đang bảo trì.');
       } finally {
         setIsLoadingPitches(false);
       }
     };
     loadPitches();
-  }, []);
+  }, [mockPitches]);
 
   useEffect(() => {
     const loadAvailability = async () => {

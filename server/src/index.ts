@@ -8,6 +8,8 @@ import { dirname, join } from 'path';
 
 import authRoutes from './routes/auth.js';
 import bookingRoutes from './routes/booking.js';
+import adminRoutes from './routes/admin.js';
+import contentRoutes from './routes/content.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -19,6 +21,8 @@ app.use(express.json());
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api', bookingRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/content', contentRoutes);
 
 // Seed default admin if not exists
 import bcryptjs from 'bcryptjs';

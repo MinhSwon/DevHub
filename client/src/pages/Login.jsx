@@ -57,8 +57,12 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      await login({ email: formData.email, password: formData.password, remember });
-      navigate('/');
+      const { user } = await login({ email: formData.email, password: formData.password, remember });
+      if (user?.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
     } catch (err) {
       setErrors((prev) => ({ ...prev, form: err.message || 'Đăng nhập thất bại' }));
     } finally {
@@ -67,21 +71,28 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-umt-blue to-blue-600 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 animate-bounce-in">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+      </div>
+
+      <div className="max-w-md w-full space-y-8 relative z-10">
+        <div className="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-white/20 hover:border-white/40 transition-all duration-300">
           {/* Header */}
           <div className="text-center">
-            <div className="mx-auto h-12 w-12 bg-umt-red rounded-full flex items-center justify-center mb-4">
-              <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            <div className="mx-auto h-16 w-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg hover:scale-110 transition-transform duration-300">
+              <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
               </svg>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              Chào mừng trở lại!
+            <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 mb-2">
+              UMT Sport Hub
             </h2>
-            <p className="text-gray-600">
-              Đăng nhập để tiếp tục sử dụng dịch vụ
+            <p className="text-gray-300 text-lg">
+              Nền tảng thể thao hiện đại cho sinh viên
             </p>
           </div>
 
@@ -90,8 +101,8 @@ const Login = () => {
             <div className="space-y-4">
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Địa chỉ email
+                <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">
+                  Email
                 </label>
                 <div className="relative">
                   <input
@@ -101,25 +112,25 @@ const Login = () => {
                     autoComplete="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-umt-blue focus:border-transparent transition-all duration-300 ${
-                      errors.email ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 bg-white/5 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-400 ${
+                      errors.email ? 'border-red-500' : 'border-white/20'
                     }`}
-                    placeholder="Nhập email của bạn"
+                    placeholder="your@email.com"
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                    <svg className="h-5 w-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
                   </div>
                 </div>
                 {errors.email && (
-                  <p className="mt-1 text-sm text-red-600 animate-fade-in">{errors.email}</p>
+                  <p className="mt-1 text-sm text-red-400 animate-fade-in">{errors.email}</p>
                 )}
               </div>
 
               {/* Password Field */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="password" className="block text-sm font-semibold text-white mb-2">
                   Mật khẩu
                 </label>
                 <div className="relative">
@@ -130,10 +141,10 @@ const Login = () => {
                     autoComplete="current-password"
                     value={formData.password}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-umt-blue focus:border-transparent transition-all duration-300 ${
-                      errors.password ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 bg-white/5 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-400 ${
+                      errors.password ? 'border-red-500' : 'border-white/20'
                     }`}
-                    placeholder="Nhập mật khẩu"
+                    placeholder="••••••••"
                   />
                   <button
                     type="button"
@@ -141,11 +152,11 @@ const Login = () => {
                     className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   >
                     {showPassword ? (
-                      <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="h-5 w-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>
                       </svg>
                     ) : (
-                      <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="h-5 w-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                       </svg>
@@ -153,7 +164,7 @@ const Login = () => {
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="mt-1 text-sm text-red-600 animate-fade-in">{errors.password}</p>
+                  <p className="mt-1 text-sm text-red-400 animate-fade-in">{errors.password}</p>
                 )}
               </div>
             </div>
@@ -167,26 +178,28 @@ const Login = () => {
                   type="checkbox"
                   checked={remember}
                   onChange={(e) => setRemember(e.target.checked)}
-                  className="h-4 w-4 text-umt-red focus:ring-umt-red border-gray-300 rounded"
+                  className="h-4 w-4 text-purple-500 focus:ring-purple-500 border-white/20 rounded"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">
                   Ghi nhớ đăng nhập
                 </label>
               </div>
-              <Link to="/forgot-password" className="text-sm text-umt-red hover:text-red-700 font-medium">
+              <Link to="/forgot-password" className="text-sm text-purple-300 hover:text-purple-200 font-medium transition-colors">
                 Quên mật khẩu?
               </Link>
             </div>
 
             {errors.form && (
-              <p className="mt-1 text-sm text-red-600 animate-fade-in">{errors.form}</p>
+              <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg animate-fade-in">
+                {errors.form}
+              </div>
             )}
 
             {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-umt-red text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 px-4 rounded-lg hover:from-purple-600 hover:to-pink-600 disabled:from-gray-600 disabled:to-gray-600 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
             >
               {isLoading ? (
                 <>
@@ -202,17 +215,17 @@ const Login = () => {
             <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
+                  <div className="w-full border-t border-white/20" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">Hoặc đăng nhập bằng</span>
+                  <span className="px-2 bg-white/5 text-gray-400">hoặc tiếp tục bằng</span>
                 </div>
               </div>
 
               <div className="mt-6 grid grid-cols-2 gap-3">
                 <button
                   type="button"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  className="w-full inline-flex justify-center py-2 px-4 border border-white/20 rounded-lg shadow-sm bg-white/5 text-sm font-medium text-gray-300 hover:bg-white/10 transition-colors"
                 >
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -225,7 +238,7 @@ const Login = () => {
 
                 <button
                   type="button"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  className="w-full inline-flex justify-center py-2 px-4 border border-white/20 rounded-lg shadow-sm bg-white/5 text-sm font-medium text-gray-300 hover:bg-white/10 transition-colors"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -236,10 +249,10 @@ const Login = () => {
             </div>
 
             {/* Register Link */}
-            <div className="text-center">
-              <p className="text-sm text-gray-600">
+            <div className="text-center pt-6 border-t border-white/20">
+              <p className="text-sm text-gray-400">
                 Chưa có tài khoản?{' '}
-                <Link to="/register" className="font-medium text-umt-red hover:text-red-700">
+                <Link to="/register" className="font-semibold text-purple-300 hover:text-purple-200 transition-colors">
                   Đăng ký ngay
                 </Link>
               </p>

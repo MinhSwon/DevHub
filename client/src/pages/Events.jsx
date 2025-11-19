@@ -5,6 +5,49 @@ const Events = () => {
   const [selectedDate, setSelectedDate] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [timeLeft, setTimeLeft] = useState({});
+  const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // Load events from backend
+  useEffect(() => {
+    const fetchEvents = async () => {
+      setIsLoading(true);
+      setError('');
+      try {
+        const res = await fetch('/api/content/events');
+        if (!res.ok) throw new Error('Không tải được danh sách sự kiện');
+        const data = await res.json();
+        // Chuẩn hóa dữ liệu về format cũ (nếu cần)
+        const mapped = (Array.isArray(data) ? data : []).map((e, idx) => ({
+          id: e.id ?? idx + 1,
+          title: e.title,
+          category: e.event_type || 'tournament',
+          date: e.start_time ? e.start_time.substring(0, 10) : '',
+          time: e.start_time ? e.start_time.substring(11, 16) : '',
+          endTime: e.end_time ? e.end_time.substring(11, 16) : '',
+          location: e.location || 'UMT Sports Hub',
+          description: e.description || '',
+          image:
+            'https://images.unsplash.com/photo-1431324155629-1a6ce1c6c6c6?w=600&h=400&fit=crop',
+          participants: 0,
+          maxParticipants: e.max_participants || 0,
+          price: 0,
+          status: e.status || 'upcoming',
+          organizer: 'UMT Sports Hub',
+          tags: [],
+          featured: idx === 0, // tạm làm sự kiện đầu tiên là nổi bật
+        }));
+        setEvents(mapped);
+      } catch (err) {
+        setError(err.message || 'Lỗi tải dữ liệu');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   // Countdown timer effect
   useEffect(() => {
@@ -32,7 +75,7 @@ const Events = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [events]);
 
   const categories = [
     { id: 'all', name: 'Tất cả', icon: '🎉' },
@@ -47,115 +90,6 @@ const Events = () => {
     { id: 'today', name: 'Hôm nay' },
     { id: 'week', name: 'Tuần này' },
     { id: 'month', name: 'Tháng này' }
-  ];
-
-  const events = [
-    {
-      id: 1,
-      title: 'Giải bóng đá sinh viên UMT 2024',
-      category: 'tournament',
-      date: '2024-02-15',
-      time: '08:00',
-      endTime: '18:00',
-      location: 'Sân vận động chính',
-      description: 'Giải đấu bóng đá lớn nhất trong năm với sự tham gia của 32 đội bóng từ các khoa trong trường.',
-      image: 'https://images.unsplash.com/photo-1431324155629-1a6ce1c6c6c6?w=600&h=400&fit=crop',
-      participants: 320,
-      maxParticipants: 640,
-      price: 0,
-      status: 'upcoming',
-      organizer: 'CLB Thể thao UMT',
-      tags: ['Bóng đá', 'Sinh viên', 'Giải đấu'],
-      featured: true,
-      priority: 'high'
-    },
-    {
-      id: 2,
-      title: 'Workshop kỹ thuật Tennis cơ bản',
-      category: 'workshop',
-      date: '2024-02-20',
-      time: '14:00',
-      endTime: '17:00',
-      location: 'Sân Tennis T1',
-      description: 'Học các kỹ thuật cơ bản của Tennis với huấn luyện viên chuyên nghiệp.',
-      image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=400&fit=crop',
-      participants: 15,
-      maxParticipants: 20,
-      price: 50000,
-      status: 'upcoming',
-      organizer: 'CLB Tennis UMT',
-      tags: ['Tennis', 'Kỹ thuật', 'Học tập'],
-      featured: false,
-      priority: 'medium'
-    },
-    {
-      id: 3,
-      title: 'Khóa học bơi lội cho người mới bắt đầu',
-      category: 'training',
-      date: '2024-02-01',
-      time: '16:00',
-      endTime: '18:00',
-      location: 'Bể bơi Olympic',
-      description: 'Khóa học bơi lội 8 buổi dành cho người mới bắt đầu với huấn luyện viên chuyên nghiệp.',
-      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop',
-      participants: 12,
-      maxParticipants: 15,
-      price: 800000,
-      status: 'upcoming',
-      organizer: 'Trung tâm Bơi lội UMT',
-      tags: ['Bơi lội', 'Khóa học', 'Người mới']
-    },
-    {
-      id: 4,
-      title: 'Giải cầu lông mở rộng UMT 2024',
-      category: 'tournament',
-      date: '2024-02-05',
-      time: '09:00',
-      endTime: '17:00',
-      location: 'Sân cầu lông C1-C4',
-      description: 'Giải cầu lông mở rộng dành cho tất cả sinh viên và cán bộ với giải thưởng hấp dẫn.',
-      image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=400&fit=crop',
-      participants: 80,
-      maxParticipants: 128,
-      price: 100000,
-      status: 'upcoming',
-      organizer: 'CLB Cầu lông UMT',
-      tags: ['Cầu lông', 'Giải đấu', 'Mở rộng']
-    },
-    {
-      id: 5,
-      title: 'Sự kiện kết nối cộng đồng thể thao',
-      category: 'social',
-      date: '2024-02-10',
-      time: '18:00',
-      endTime: '21:00',
-      location: 'Hội trường A',
-      description: 'Sự kiện giao lưu và kết nối giữa các thành viên cộng đồng thể thao UMT.',
-      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop',
-      participants: 50,
-      maxParticipants: 100,
-      price: 0,
-      status: 'upcoming',
-      organizer: 'Cộng đồng UMT',
-      tags: ['Giao lưu', 'Cộng đồng', 'Kết nối']
-    },
-    {
-      id: 6,
-      title: 'Workshop Yoga và Thiền',
-      category: 'workshop',
-      date: '2024-02-15',
-      time: '07:00',
-      endTime: '09:00',
-      location: 'Sân Yoga',
-      description: 'Buổi tập Yoga và Thiền buổi sáng để bắt đầu ngày mới với năng lượng tích cực.',
-      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop',
-      participants: 25,
-      maxParticipants: 30,
-      price: 0,
-      status: 'upcoming',
-      organizer: 'CLB Yoga UMT',
-      tags: ['Yoga', 'Thiền', 'Sức khỏe']
-    }
   ];
 
   const filteredEvents = events.filter(event => {

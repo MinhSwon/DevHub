@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Community = () => {
   const [activeTab, setActiveTab] = useState('leaderboard');
   const [selectedSport, setSelectedSport] = useState('all');
   const [selectedPeriod, setSelectedPeriod] = useState('week');
+  const [communityPosts, setCommunityPosts] = useState([]);
+  const [isLoadingCommunity, setIsLoadingCommunity] = useState(false);
+  const [communityError, setCommunityError] = useState('');
 
   const sports = [
     { id: 'all', name: 'Tất cả', icon: '🏟️' },
@@ -226,6 +229,32 @@ const Community = () => {
       default: return 'Không xác định';
     }
   };
+
+  // Load community posts for events tab (dùng dữ liệu bài viết cộng đồng)
+  useEffect(() => {
+    const fetchCommunityPosts = async () => {
+      setIsLoadingCommunity(true);
+      setCommunityError('');
+      try {
+        const res = await fetch('/api/content/posts/community');
+        if (!res.ok) throw new Error('Không tải được bài viết cộng đồng');
+        const data = await res.json();
+        const mapped = (Array.isArray(data) ? data : []).map((p, idx) => ({
+          id: p.id ?? idx + 1,
+          title: p.title,
+          content: p.content || '',
+          date: p.created_at || new Date().toISOString(),
+        }));
+        setCommunityPosts(mapped);
+      } catch (err) {
+        setCommunityError(err.message || 'Lỗi tải dữ liệu cộng đồng');
+      } finally {
+        setIsLoadingCommunity(false);
+      }
+    };
+
+    fetchCommunityPosts();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-bg-primary to-ocean-pale">
@@ -506,18 +535,42 @@ const Community = () => {
             <div className="bg-white rounded-xl shadow-lg p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-gray-900">🎉 Sự kiện cộng đồng</h2>
-                <button className="bg-gradient-to-r from-umt-red to-red-600 text-white px-6 py-3 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium">
-                  Tạo sự kiện
-                </button>
               </div>
-              <div className="text-center py-12">
-                <div className="text-6xl mb-4">🎉</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Sự kiện sắp diễn ra</h3>
-                <p className="text-gray-600 mb-6">Các sự kiện thể thao và hoạt động cộng đồng sẽ được cập nhật tại đây</p>
-                <button className="bg-gradient-to-r from-umt-blue to-blue-600 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-medium">
-                  Xem lịch sự kiện
-                </button>
-              </div>
+              {communityError && (
+                <div className="mb-4 text-sm text-red-600">{communityError}</div>
+              )}
+              {isLoadingCommunity ? (
+                <div className="text-center py-8 text-sm text-gray-500">
+                  Đang tải sự kiện cộng đồng...
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {communityPosts.map((post) => (
+                    <div
+                      key={post.id}
+                      className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors duration-200"
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="font-semibold text-gray-900">
+                          {post.title}
+                        </h3>
+                        <span className="text-xs text-gray-500">
+                          {post.date &&
+                            new Date(post.date).toLocaleString('vi-VN')}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 line-clamp-3">
+                        {post.content}
+                      </p>
+                    </div>
+                  ))}
+                  {communityPosts.length === 0 && !communityError && (
+                    <div className="text-center py-8 text-sm text-gray-500">
+                      Chưa có sự kiện cộng đồng nào.
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}
